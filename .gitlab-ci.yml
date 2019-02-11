@@ -1,0 +1,14 @@
+
+# GitLab CI configuration
+
+linux-docker:
+  tags:
+    - linux
+    - docker
+  image: robobenklein/home:latest
+  before_script:
+    - git submodule update --init --recursive
+    - "[[ -e ./test/setup.sh ]] && ./test/setup.sh"
+  script:
+    - ./build.sh -c
+
