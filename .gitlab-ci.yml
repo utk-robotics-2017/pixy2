@@ -6,8 +6,20 @@ linux-docker:
     - linux
     - docker
   image: robobenklein/home:latest
+  cache:
+    key: ${CI_JOB_NAME}
+    paths:
+      - "${CI_PROJECT_DIR}/apt-cache.d/"
+  # artifacts:
+  #   when: always
+  #   paths:
+  #     -  build/
+  #   expire_in: 1 week
   before_script:
     - git submodule update --init --recursive
+    - sudo apt-get update
+    - export APT_CACHE_DIR="${CI_PROJECT_DIR}/apt-cache.d/" && mkdir -pv $APT_CACHE_DIR
+    - sudo apt-get -o dir::cache::archives="$APT_CACHE_DIR" install --yes libusb-1.0.0-dev
     - "[[ -e ./test/setup.sh ]] && ./test/setup.sh"
   script:
     - ./build.sh -c
