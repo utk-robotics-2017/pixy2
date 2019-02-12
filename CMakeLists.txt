@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 project(libpixyusb2)
 message("Building ${PROJECT_NAME}")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")
 find_package(LibUSB REQUIRED)
 include_directories(${LIBUSB_1_INCLUDE_DIRS})
 
@@ -31,7 +31,7 @@ add_library(${PROJECT_NAME}
   ${${PROJECT_NAME}_HEADERS}
 )
 target_include_directories(
-  ${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS}
+  ${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_INCLUDE_DIRS} ${LIBUSB_1_INCLUDE_DIRS}
 )
 set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
 target_include_directories(
