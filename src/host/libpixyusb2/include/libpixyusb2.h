@@ -22,7 +22,7 @@
 #define RBUF_LEN      0x200
 
 #include <string.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include "usblink.h"
 #include "util.h"
@@ -36,19 +36,19 @@ class Link2USB
 public:
   Link2USB ();
   ~Link2USB ();
-  
+
   int8_t open (uint32_t arg);
   void close ();
-    
+
   int16_t recv (uint8_t *buf, uint8_t len, uint16_t *cs=NULL);
   int16_t send (uint8_t *buf, uint8_t len);
-  
+
   int callChirp (const char *func, ...);
   int callChirp (const char *func, va_list  args);
   int stop();
   int resume();
   int getRawFrame(uint8_t **bayerFrame);
-  
+
 private:
   Chirp *m_chirp;
   USBLink *m_link;
